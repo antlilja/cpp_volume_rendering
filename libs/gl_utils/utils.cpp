@@ -1,6 +1,5 @@
 #include "utils.h"
 #include <GL/glew.h>
-#include <cerrno>
 #include <string>
 #include <codecvt>
 #include <locale>
@@ -73,12 +72,11 @@ namespace gl
   {
     GLuint shader_id = 0;
     FILE* file;
-    errno_t err;
 
     long file_size = -1;
     char* glsl_source;
 
-    if (((err = fopen_s(&file, file_name, "rb")) != 0) &&
+    if (((file = fopen(file_name, "rb")) == 0) &&
       0 == fseek(file, 0, SEEK_END) &&
       -1 != (file_size = ftell(file)))
     {
@@ -165,7 +163,7 @@ namespace gl
 
           // wstring to string
           char* result = (char*) malloc (sizeof (char)* (wstr.size() + 1));
-          std::use_facet<std::ctype<wchar_t>>(std::locale(".1252")).narrow(wstr.data(), wstr.data() + wstr.size(), ' ', result);
+          std::use_facet<std::ctype<wchar_t>>(std::locale("")).narrow(wstr.data(), wstr.data() + wstr.size(), ' ', result);
           result[wstr.size()] = '\0';
 
           return result;

@@ -1,7 +1,5 @@
 #include "rawloader.h"
 
-#include <cerrno>
-
 IRAWLoader::IRAWLoader (std::string filename, size_t bytes_per_pixel, size_t num_voxels, size_t type_size)
 {
   m_data = NULL;
@@ -11,9 +9,8 @@ IRAWLoader::IRAWLoader (std::string filename, size_t bytes_per_pixel, size_t num
   m_typesize = type_size;
 
   FILE *fp;
-  errno_t err;
 
-  if((err = fopen_s(&fp, filename.c_str(), "rb")) != 0)
+  if((fp = fopen(filename.c_str(), "rb")) == 0)
   {
     std::cout << "IRAWLoader: opening .raw file failed" << std::endl;
     exit(EXIT_FAILURE);

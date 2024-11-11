@@ -2,7 +2,7 @@
 #ifdef USING_FREEGLUT
 
 #include "renderingmanager.h"
-#include <GL/wglew.h>
+#include <GL/glxew.h>
 
 void ApplicationFreeGLUT::glutSwapBuffer (void* data)
 {
@@ -141,8 +141,10 @@ bool ApplicationFreeGLUT::Init (int argc, char** argv)
   RenderingManager::Instance()->f_swapbuffer = ApplicationFreeGLUT::glutSwapBuffer;
   
   // VSYNC
-  if (wglGetSwapIntervalEXT() > 0)
-    wglSwapIntervalEXT(1);
+  int interval;
+  glXQueryDrawable(glXGetCurrentDisplay(), glXGetCurrentDrawable(), GLX_SWAP_INTERVAL_EXT, &interval);
+  if (interval > 0)
+    glXSwapIntervalEXT(glXGetCurrentDisplay(), glXGetCurrentDrawable(), 1);
 
   return true;
 }

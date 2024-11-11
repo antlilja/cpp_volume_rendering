@@ -93,11 +93,11 @@ public:
   }
 
 private:
-  template<typename T>
+  template<typename U>
   class ProxyOpMatrix
   {
   public:
-    ProxyOpMatrix (Matrix<T> *ptr, int row)
+    ProxyOpMatrix (Matrix<U> *ptr, int row)
     {
       m_ptr = ptr;
       m_row = row;
@@ -113,11 +113,11 @@ private:
     int m_row;
   };
 
-  template<typename T>
+  template<typename U>
   class ConstProxyOpMatrix
   {
   public:
-    ConstProxyOpMatrix (const Matrix<T> *ptr, int row)
+    ConstProxyOpMatrix (const Matrix<U> *ptr, int row)
     {
       m_ptr = ptr;
       m_row = row;
@@ -225,11 +225,11 @@ public:
   }
   T m[R*C];
 private:
-  template<typename T, unsigned int R, unsigned int C = R>
+  template<typename U, unsigned int R2, unsigned int C2 = R2>
   class ProxyOpMat
   {
   public:
-    ProxyOpMat (Mat<T, R, C> *ptr, int row)
+    ProxyOpMat (Mat<U, R2, C2> *ptr, int row)
     {
       m_ptr = ptr;
       m_row = row;
@@ -241,15 +241,15 @@ private:
     }
 
   private:
-    Mat<T, R, C> *m_ptr;
+    Mat<U, R2, C2> *m_ptr;
     int m_row;
   };
 
-  template<typename T, unsigned int R, unsigned int C = R>
+  template<typename U, unsigned int R2, unsigned int C2 = R2>
   class ConstProxyOpMat
   {
   public:
-    ConstProxyOpMat (const Mat<T, R, C> *ptr, int row)
+    ConstProxyOpMat (const Mat<U, R2, C2> *ptr, int row)
     {
       m_ptr = ptr;
       m_row = row;
@@ -261,7 +261,7 @@ private:
     }
 
   private:
-    const Mat<T, R, C> *m_ptr;
+    const Mat<U, R2, C2> *m_ptr;
     int m_row;
   };
 

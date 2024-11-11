@@ -11,7 +11,7 @@
 
 #include <volvis_utils/utils.h>
 
-#define USING_IM_EXT
+// #define USING_IM_EXT
 #ifdef USING_IM_EXT
 #include <im/im.h>
 #include <im/im_image.h>
@@ -29,7 +29,7 @@
 #include <chrono>
 #include <filesystem>
 
-#include <GL/wglew.h>
+#include <GL/glxew.h>
 
 #define ALWAYS_OUTDATE_THE_CURRENT_VR_RENDERER
 
@@ -304,11 +304,11 @@ void RenderingManager::Display ()
         //Enable or disable vsync according to user prefs
         if (m_vsync)
         {
-          wglSwapIntervalEXT(1);
+          glXSwapIntervalEXT(glXGetCurrentDisplay(), glXGetCurrentDrawable(), 1);
         }
         else
         {
-          wglSwapIntervalEXT(0);
+          glXSwapIntervalEXT(glXGetCurrentDisplay(), glXGetCurrentDrawable(), 0);
         }
         //Restore UI
         m_imgui_render_ui = true;
@@ -602,11 +602,11 @@ void RenderingManager::SetImGuiInterface ()
     {
       if (m_vsync)
       {
-        wglSwapIntervalEXT(1);
+        glXSwapIntervalEXT(glXGetCurrentDisplay(), glXGetCurrentDrawable(), 1);
       }
       else
       {
-        wglSwapIntervalEXT(0);
+        glXSwapIntervalEXT(glXGetCurrentDisplay(), glXGetCurrentDrawable(), 0);
       }
     };
     if (ImGui::Checkbox("Idle Redraw", &m_idle_rendering));
@@ -862,7 +862,7 @@ void RenderingManager::SetImGuiInterface ()
           m_imgui_render_ui = false;
 
           //Disable VSync for full speed
-          wglSwapIntervalEXT(0);
+          glXSwapIntervalEXT(glXGetCurrentDisplay(), glXGetCurrentDrawable(), 0);
         }
       }
     }
